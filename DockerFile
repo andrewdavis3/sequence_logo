@@ -3,7 +3,7 @@ from python:3.8.3-slim
 RUN pip3 install weblogo Biopython argparse
 RUN apt-get update
 RUN apt-get install ghostscript -y
-RUN apt-get install clustalw -y 
+RUN apt-get install clustalo -y 
 
 RUN mkdir /workspace
 RUN mkdir /workspace/example_data

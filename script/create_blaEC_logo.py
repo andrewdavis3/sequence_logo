@@ -2,7 +2,7 @@
 from weblogo import *
 from Bio import Entrez
 import argparse
-from Bio.Align.Applications import ClustalwCommandline
+from Bio.Align.Applications import ClustalOmegaCommandline
 import os
 import shutil
 
@@ -21,12 +21,12 @@ def pullSequence(emailAddress,outputFolder):
             output.write(efetchHandle.read())
     return outputFile
 
-# generate clustalw alignment
+# generate clustalo alignment
 def clustal(fastaFile):
     outAlnFile=fastaFile.replace(".fasta","")+"_aln.fasta"
-    # run clustalw
-    cline = ClustalwCommandline("clustalw", 
-    infile=fastaFile, outfile=outAlnFile, output='FASTA')
+    # run clustalo
+    cline = ClustalOmegaCommandline( 
+    infile=fastaFile, outfile=outAlnFile,outfmt="fasta",force=True)
     stdout, stderr = cline()
     print(stdout, stderr)
     return outAlnFile
@@ -61,7 +61,7 @@ def main():
         os.makedirs(outFolder)
     # pull sequences from NCBI
     outFile=pullSequence(parseArgs.email,outFolder)
-    # run clustalw
+    # run clustalo
     outAln=clustal(outFile)
     # generate sequence logo
     seqLogo(outAln,outFolder)
